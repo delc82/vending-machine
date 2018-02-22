@@ -4,18 +4,14 @@
     <title>Vending Machine</title>
 </head>
 <body>
-    <div id="myData">
-      <p>Prices: <span class="products"></span></p>
-      <p>Bills available: <span class="bills"></span></p>
-    </div>
-    <hr>
     <div id="form">
       <label for="addMoney">Add money</label>
       <input type="text" id="addMoney">
-      <label for="productSelection">Select price</label>
-      <input type="text" id="productSelection">
-      <button id="selectButton">Make purchase</button>
+      <label for="productSelection">Select product</label>
+      <select id="productSelection"></select>
+      <button id="purchaseButton">Make purchase</button>
     </div>
+    <hr>
     <div id="myOutput">
       <p>Your change: <span class="change"></span></p>
       <p>Message: <span class="message"></span></p>
