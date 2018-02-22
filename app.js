@@ -35,7 +35,7 @@ let controller = (function(dataCtrl, UICtrl) {
     
     let productSelection = function() {
         data.products.forEach(function(element) {
-            let newOption = '<option value="' + element.name + '">'+ element.name + '</option>';
+            let newOption = '<option value="' + element.name + '">'+ element.name + ' - $' + element.price + '</option>';
             document.querySelector(DOM.inputProdSelect).insertAdjacentHTML('beforeend', newOption);
         });
     };
