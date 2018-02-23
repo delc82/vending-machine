@@ -20,12 +20,20 @@ let UIController = (function() {
         inputMoney: '#addMoney',
         inputProdSelect: '#productSelection',
         purchaseBtn: '#purchaseButton',
-        changeLabel: '.change'
+        changeLabel: '.change',
+        message: '.message'
+    };
+    
+    let clearValues = function() {
+      document.querySelector(DOMstrings.inputMoney).value = '';  
     };
     
     return {
         getDOMstrings: function() {
             return DOMstrings;
+        },
+        clearFields: function() {
+            clearValues();
         }
     };
     
@@ -44,10 +52,24 @@ let controller = (function(dataCtrl, UICtrl) {
     
     let moneyChange = function() {
         document.querySelector(DOM.purchaseBtn).addEventListener('click', function() {
-            let addChange = document.querySelector(DOM.inputMoney).value;
+            let money = document.querySelector(DOM.inputMoney).value;
             let product = document.querySelector(DOM.inputProdSelect).value;
-            let change = addChange - product;
-            document.querySelector(DOM.changeLabel).textContent = '$' + change;
+            if (money > 0 && !isNaN(money)) {
+                if (money < product) {
+                    document.querySelector(DOM.changeLabel).textContent = '$0';
+                    document.querySelector(DOM.message).textContent = 'Fondos insuficientes!';
+                    UICtrl.clearFields();
+                } else {
+                    let change = money - product;
+                    document.querySelector(DOM.changeLabel).textContent = '$' + change;
+                    document.querySelector(DOM.message).textContent = 'Gracias por su compra!';
+                    UICtrl.clearFields();
+                }
+            } else {
+                document.querySelector(DOM.changeLabel).textContent = '$0';
+                document.querySelector(DOM.message).textContent = 'Por favor ingrese dinero';
+                UICtrl.clearFields();
+            }
         });
     };
     
