@@ -4,7 +4,9 @@ let dataController = (function() {
       products: [
         {name: 'Dulce candy', price: 25},
         {name: 'Springles', price: 30},
-        {name: 'Tostadas Grills', price: 40}
+        {name: 'Tostadas Grills', price: 40},
+        {name: 'Toxic Pizza', price: 67},
+        {name: 'Orange Juice', price: 80}
       ]
     };
     
@@ -18,8 +20,10 @@ let dataController = (function() {
 let UIController = (function() {
     const DOMstrings = {
         inputMoney: '#addMoney',
+        fundsBtn: '#fundsButton',
         inputProdSelect: '#productSelection',
         purchaseBtn: '#purchaseButton',
+        fundsLabel: '.funds',
         changeLabel: '.change',
         message: '.message'
     };
@@ -34,6 +38,9 @@ let UIController = (function() {
         },
         clearFields: function() {
             clearValues();
+        },
+        uiChange: function(uiElement, message) {
+            document.querySelector(uiElement).textContent = message;
         }
     };
     
@@ -42,6 +49,9 @@ let UIController = (function() {
 let controller = (function(dataCtrl, UICtrl) {
     let data = dataCtrl.getData();
     let DOM = UICtrl.getDOMstrings();
+    let fundsArr = [];
+    let totalFunds = 0;
+    let change = 0;
     
     let productSelection = function() {
         data.products.forEach(function(element) {
@@ -50,24 +60,44 @@ let controller = (function(dataCtrl, UICtrl) {
         });
     };
     
+    let getSum = function(a, b) {
+        return a + b;
+    }
+    
+    let addFunds = function() {
+        document.querySelector(DOM.fundsBtn).addEventListener('click', function() {
+            let money = parseFloat(document.querySelector(DOM.inputMoney).value);
+            if (money > 0 && !isNaN(money)) {
+                fundsArr.push(money);
+            }
+            if (fundsArr.length) {
+                totalFunds = fundsArr.reduce(getSum);
+                document.querySelector(DOM.fundsLabel).textContent = '$' + totalFunds;
+            }
+            UICtrl.clearFields();
+        });
+    };
+    
     let moneyChange = function() {
         document.querySelector(DOM.purchaseBtn).addEventListener('click', function() {
-            let money = document.querySelector(DOM.inputMoney).value;
             let product = document.querySelector(DOM.inputProdSelect).value;
-            if (money > 0 && !isNaN(money)) {
-                if (money < product) {
-                    document.querySelector(DOM.changeLabel).textContent = '$0';
-                    document.querySelector(DOM.message).textContent = 'Fondos insuficientes!';
+            if (totalFunds > 0) {
+                if (totalFunds < product) {
+                    UICtrl.uiChange(DOM.changeLabel, '$0');
+                    UICtrl.uiChange(DOM.message, 'Fondos insuficientes!');
                     UICtrl.clearFields();
                 } else {
-                    let change = money - product;
-                    document.querySelector(DOM.changeLabel).textContent = '$' + change;
-                    document.querySelector(DOM.message).textContent = 'Gracias por su compra!';
+                    change = totalFunds - product;
+                    UICtrl.uiChange(DOM.changeLabel, '$' + change);
+                    fundsArr = [];
+                    totalFunds = 0;
+                    UICtrl.uiChange(DOM.fundsLabel, '$' + totalFunds);
+                    UICtrl.uiChange(DOM.message, 'Gracias por su compra!');
                     UICtrl.clearFields();
                 }
             } else {
-                document.querySelector(DOM.changeLabel).textContent = '$0';
-                document.querySelector(DOM.message).textContent = 'Por favor ingrese dinero';
+                UICtrl.uiChange(DOM.changeLabel, '$0');
+                UICtrl.uiChange(DOM.message, 'Por favor ingrese dinero');
                 UICtrl.clearFields();
             }
         });
@@ -75,6 +105,7 @@ let controller = (function(dataCtrl, UICtrl) {
     
     return {
         init: function() {
+            addFunds();
             productSelection();
             moneyChange();
         }
