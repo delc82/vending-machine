@@ -84,7 +84,7 @@ let controller = (function(dataCtrl, UICtrl) {
             if (totalFunds > 0) {
                 if (totalFunds < product) {
                     UICtrl.uiChange(DOM.changeLabel, '$0');
-                    UICtrl.uiChange(DOM.message, 'Fondos insuficientes!');
+                    UICtrl.uiChange(DOM.message, 'Insufficient funds!');
                     UICtrl.clearFields();
                 } else {
                     change = totalFunds - product;
@@ -92,12 +92,12 @@ let controller = (function(dataCtrl, UICtrl) {
                     fundsArr = [];
                     totalFunds = 0;
                     UICtrl.uiChange(DOM.fundsLabel, '$' + totalFunds);
-                    UICtrl.uiChange(DOM.message, 'Gracias por su compra!');
+                    UICtrl.uiChange(DOM.message, 'Thanks for your purchase!'');
                     UICtrl.clearFields();
                 }
             } else {
                 UICtrl.uiChange(DOM.changeLabel, '$0');
-                UICtrl.uiChange(DOM.message, 'Por favor ingrese dinero');
+                UICtrl.uiChange(DOM.message, 'Please add some money');
                 UICtrl.clearFields();
             }
         });
