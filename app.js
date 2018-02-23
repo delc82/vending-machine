@@ -12,20 +12,22 @@ let dataController = (function() {
         getData: function() {
             return data;
         }
-    }
+    };
 }());
 
 let UIController = (function() {
     const DOMstrings = {
         inputMoney: '#addMoney',
-        inputProdSelect: '#productSelection'
+        inputProdSelect: '#productSelection',
+        purchaseBtn: '#purchaseButton',
+        changeLabel: '.change'
     };
     
     return {
         getDOMstrings: function() {
             return DOMstrings;
         }
-    }
+    };
     
 }());
 
@@ -35,16 +37,26 @@ let controller = (function(dataCtrl, UICtrl) {
     
     let productSelection = function() {
         data.products.forEach(function(element) {
-            let newOption = '<option value="' + element.name + '">'+ element.name + ' - $' + element.price + '</option>';
+            let newOption = '<option value="' + element.price + '">'+ element.name + ' - $' + element.price + '</option>';
             document.querySelector(DOM.inputProdSelect).insertAdjacentHTML('beforeend', newOption);
+        });
+    };
+    
+    let moneyChange = function() {
+        document.querySelector(DOM.purchaseBtn).addEventListener('click', function() {
+            let addChange = document.querySelector(DOM.inputMoney).value;
+            let product = document.querySelector(DOM.inputProdSelect).value;
+            let change = addChange - product;
+            document.querySelector(DOM.changeLabel).textContent = '$' + change;
         });
     };
     
     return {
         init: function() {
             productSelection();
+            moneyChange();
         }
-    }
+    };
 }(dataController, UIController));
 
 controller.init();
