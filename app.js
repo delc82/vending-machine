@@ -14,7 +14,8 @@ let dataController = (function() {
             {name: 'Springles', price: 30},
             {name: 'Tostadas Grills', price: 40},
             {name: 'Toxic Pizza', price: 67},
-            {name: 'Orange Juice', price: 80}
+            {name: 'Orange Juice', price: 80},
+            {name: 'Limonade Freeze', price: 90}
         ]
     };
     
