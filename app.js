@@ -62,7 +62,7 @@ let controller = (function(dataCtrl, UICtrl) {
     
     let getSum = function(a, b) {
         return a + b;
-    }
+    };
     
     let addFunds = function() {
         document.querySelector(DOM.fundsBtn).addEventListener('click', function() {
@@ -88,11 +88,11 @@ let controller = (function(dataCtrl, UICtrl) {
                     UICtrl.clearFields();
                 } else {
                     change = totalFunds - product;
-                    UICtrl.uiChange(DOM.changeLabel, '$' + change);
                     fundsArr = [];
                     totalFunds = 0;
+                    UICtrl.uiChange(DOM.changeLabel, '$' + change);
                     UICtrl.uiChange(DOM.fundsLabel, '$' + totalFunds);
-                    UICtrl.uiChange(DOM.message, 'Thanks for your purchase!'');
+                    UICtrl.uiChange(DOM.message, 'Thanks for your purchase!');
                     UICtrl.clearFields();
                 }
             } else {
